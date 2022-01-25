@@ -42,9 +42,7 @@ const Form = (props) => {
     return (
       <option className="location-option" key={index} value={location.name}>{location.name}</option>
     )
-  })
-
-  
+  })  
 
   const handleNameChange = (event) => {
     setNameValue(event.target.value);
@@ -67,7 +65,7 @@ const Form = (props) => {
   }
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const formObject = {
       name: nameValue,
       email: emailValue,
@@ -75,7 +73,7 @@ const Form = (props) => {
       occupation: occupationValue,
       state: locationValue
     }
-    postData(formObject)
+    postData(formObject);
   }
 
   return (
