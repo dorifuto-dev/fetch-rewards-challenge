@@ -4,7 +4,6 @@ export const fetchData = () => {
 }
 
 export const postData = (userObject) => {
-  console.log(JSON.stringify(userObject))
   const requestOptions = {
     method: 'POST',
     headers: {
