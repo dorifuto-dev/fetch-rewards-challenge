@@ -1,5 +1,5 @@
-export const fetchData = (url) => {
-  return fetch(url)
+export const fetchData = () => {
+  return fetch("https://frontend-take-home.fetchrewards.com/form")
     .then(response => {
       if (response.ok) {
         return response.json()
@@ -12,4 +12,17 @@ export const fetchData = (url) => {
       }
     }
   )
+}
+
+export const postData = (userObject) => {
+  console.log(JSON.stringify(userObject))
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type' : 'application/json',
+    },
+    body: JSON.stringify(userObject)
+  }
+  return fetch("https://frontend-take-home.fetchrewards.com/form", requestOptions)
+    .then(response => console.log(response.status))
 }
