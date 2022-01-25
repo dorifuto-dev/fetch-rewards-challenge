@@ -11,16 +11,18 @@ const Form = (props) => {
   const [passwordValue, setPasswordValue] = useState('');
   const [occupationValue, setOccupationValue] = useState(null);
   const [locationValue, setLocationValue] = useState(null);
+  const [incompleteError, setIncompleteError] = useState('');
+  const [submitMessage, setSubmitMessage] = useState('');
 
   useEffect(() => {
     fetchFormData();
   }, []);
 
   useEffect(() => {
-    populateSelectField();
+    populateSelectOptions();
   }, [formData]);
 
-  const populateSelectField = () => {
+  const populateSelectOptions = () => {
     if (formData) {
       setOccupations(formData.occupations);
       setLocations(formData.states);
@@ -64,20 +66,32 @@ const Form = (props) => {
     setLocationValue(event.target.value);
   }
 
+  const formObject = {
+    name: nameValue,
+    email: emailValue,
+    password: passwordValue,
+    occupation: occupationValue,
+    state: locationValue
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const formObject = {
-      name: nameValue,
-      email: emailValue,
-      password: passwordValue,
-      occupation: occupationValue,
-      state: locationValue
+    let { name, email, password, occupation, state } = formObject;
+    if ( name && email && password && occupation && state ) {
+      postData(formObject)
+        .catch(e => setSubmitMessage(e.message))
+        .then(setTimeout(() => setSubmitMessage(''), 4000))
     }
-    postData(formObject);
+    else {
+      setIncompleteError("Please fill out all fields before submitting the form.")
+      setTimeout(() => setIncompleteError(""), 4000)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {submitMessage && <p>{submitMessage}</p>}
+      {incompleteError && <p>{incompleteError}</p>} 
       <input 
         type="text"
         value={nameValue} 
