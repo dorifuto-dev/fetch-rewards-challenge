@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchData, postData } from '../../apiCalls';
+import './Form.scss';
 
 const Form = (props) => {
 
@@ -9,8 +10,8 @@ const Form = (props) => {
   const [nameValue, setNameValue] = useState('');
   const [emailValue, setEmailValue] = useState('');
   const [passwordValue, setPasswordValue] = useState('');
-  const [occupationValue, setOccupationValue] = useState(null);
-  const [locationValue, setLocationValue] = useState(null);
+  const [occupationValue, setOccupationValue] = useState('');
+  const [locationValue, setLocationValue] = useState('');
   const [incompleteError, setIncompleteError] = useState('');
   const [submitMessage, setSubmitMessage] = useState('');
 
@@ -84,54 +85,81 @@ const Form = (props) => {
     }
     else {
       setIncompleteError("Please fill out all fields before submitting the form.")
-      setTimeout(() => setIncompleteError(""), 4000)
+      setTimeout(() => setIncompleteError(''), 4000)
     }
   }
 
+  const occupationSelect = document.querySelector('.occupation-select');
+  if (occupationValue) {
+    occupationSelect.classList.remove('default');
+  }
+
+  const locationSelect = document.querySelector('.location-select');
+  if (locationValue) {
+    locationSelect.classList.remove('default');
+  }
+
   return (
-    <form onSubmit={handleSubmit}>
-      {submitMessage && <p>{submitMessage}</p>}
-      {incompleteError && <p>{incompleteError}</p>} 
+    <form
+      className="main-form" 
+      onSubmit={handleSubmit}
+    >
+      <h3 className="form-title">New User Signup</h3>
+      <label>Full Name</label>
       <input 
+        className="name-input"
         type="text"
         value={nameValue} 
-        placeholder="Full Name"
+        placeholder="Joseph Christ"
         onChange={handleNameChange}
       >
       </input>
+      <label>Email</label>
       <input 
+        className="email-input"
         type="text"
         value={emailValue} 
-        placeholder="Email"
+        placeholder="josephchrist@nazareth.com"
         onChange={handleEmailChange}
       >
       </input>
+      <label>Password</label>
       <input 
+        className="password-input"
         type="password"
         value={passwordValue}  
         placeholder="Password"
         onChange={handlePasswordChange}
       >
       </input>
+      <label>Occupation</label>
       <select 
-        className="occupation-select" 
+        className="occupation-select default" 
         onChange={handleOccupationChange} 
         name="occupation"
+        value={occupationValue}
       >
+        <option className="default-option" value="" disabled>Carpenter</option>
         {occupationOptions}
       </select>
+      <label>Location</label>
       <select 
-        className="location-select"
+        className="location-select default"
         onChange={handleLocationChange}
         name="location"
+        value={locationValue}
       >
+        <option className="default-option" value="" disabled>Nazareth</option>
         {locationOptions}
       </select>
       <input
+        className="submit-button"
         type="submit"
         value="Submit"
       >
       </input>
+      {submitMessage && <p className="notification">{submitMessage}</p>}
+      {incompleteError && <p className="notification">{incompleteError}</p>} 
     </form>
   );
 }
