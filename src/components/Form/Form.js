@@ -89,83 +89,78 @@ const Form = (props) => {
     }
   }
 
-  const evaluateOccupationSelection = () => {
-    const occupationSelect = document.querySelector('.occupation-select')
-    if (occupationValue) {
-
-    }
+  const occupationSelect = document.querySelector('.occupation-select');
+  if (occupationValue) {
+    occupationSelect.classList.remove('default');
   }
 
-  const evaluateLocationSelection = () => {
-
+  const locationSelect = document.querySelector('.location-select');
+  if (locationValue) {
+    locationSelect.classList.remove('default');
   }
 
   return (
-    <>
-      
-      <form
-        className="main-form" 
-        onSubmit={handleSubmit}
+    <form
+      className="main-form" 
+      onSubmit={handleSubmit}
+    >
+      <h3 className="form-title">New User Signup</h3>
+      <label>Full Name</label>
+      <input 
+        className="name-input"
+        type="text"
+        value={nameValue} 
+        placeholder="Joseph Christ"
+        onChange={handleNameChange}
       >
-        <h3 className="form-title">New User Signup</h3>
-        <label>Full Name</label>
-        <input 
-          className="name-input"
-          type="text"
-          value={nameValue} 
-          placeholder="Joseph Christ"
-          onChange={handleNameChange}
-        >
-        </input>
-        <label>Email</label>
-        <input 
-          className="email-input"
-          type="text"
-          value={emailValue} 
-          placeholder="josephchrist@nazareth.com"
-          onChange={handleEmailChange}
-        >
-        </input>
-        <label>Password</label>
-        <input 
-          className="password-input"
-          type="password"
-          value={passwordValue}  
-          placeholder="Password"
-          onChange={handlePasswordChange}
-        >
-        </input>
-        <label>Occupation</label>
-        <select 
-          className="occupation-select default" 
-          onChange={handleOccupationChange} 
-          name="occupation"
-          value={occupationValue}
-        >
-          <option className="default-option" value="" disabled>Carpenter</option>
-          {occupationOptions}
-        </select>
-        <label>Location</label>
-        <select 
-          className="location-select default"
-          onChange={handleLocationChange}
-          name="location"
-          value={locationValue}
-        >
-          <option className="default-option" value="" disabled>Nazareth</option>
-          {locationOptions}
-        </select>
-        <input
-          className="submit-button"
-          type="submit"
-          value="Submit"
-        >
-        </input>
-        {submitMessage && <p>{submitMessage}</p>}
-        {incompleteError && <p>{incompleteError}</p>} 
-      </form>
-      
-    </>
+      </input>
+      <label>Email</label>
+      <input 
+        className="email-input"
+        type="text"
+        value={emailValue} 
+        placeholder="josephchrist@nazareth.com"
+        onChange={handleEmailChange}
+      >
+      </input>
+      <label>Password</label>
+      <input 
+        className="password-input"
+        type="password"
+        value={passwordValue}  
+        placeholder="Password"
+        onChange={handlePasswordChange}
+      >
+      </input>
+      <label>Occupation</label>
+      <select 
+        className="occupation-select default" 
+        onChange={handleOccupationChange} 
+        name="occupation"
+        value={occupationValue}
+      >
+        <option className="default-option" value="" disabled>Carpenter</option>
+        {occupationOptions}
+      </select>
+      <label>Location</label>
+      <select 
+        className="location-select default"
+        onChange={handleLocationChange}
+        name="location"
+        value={locationValue}
+      >
+        <option className="default-option" value="" disabled>Nazareth</option>
+        {locationOptions}
+      </select>
+      <input
+        className="submit-button"
+        type="submit"
+        value="Submit"
+      >
+      </input>
+      {submitMessage && <p className="notification">{submitMessage}</p>}
+      {incompleteError && <p className="notification">{incompleteError}</p>} 
+    </form>
   );
 }
 
