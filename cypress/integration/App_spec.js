@@ -1,6 +1,7 @@
 describe('Fetch Rewards User flows', () => {
 
   beforeEach(() => {
+    cy.interceptGetData()
     cy.visit('http://localhost:3000/')
   })
 
