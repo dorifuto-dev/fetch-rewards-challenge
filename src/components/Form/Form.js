@@ -7,11 +7,13 @@ const Form = (props) => {
   const [formData, setFormData] = useState(null);
   const [occupations, setOccupations] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [nameValue, setNameValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
-  const [passwordValue, setPasswordValue] = useState('');
-  const [occupationValue, setOccupationValue] = useState('');
-  const [locationValue, setLocationValue] = useState('');
+  const [inputValues, setInputValues] = useState({ 
+    name: '', 
+    email: '', 
+    password: '', 
+    occupation: '', 
+    state: '' 
+  });
   const [incompleteError, setIncompleteError] = useState('');
   const [submitMessage, setSubmitMessage] = useState('');
 
@@ -47,39 +49,16 @@ const Form = (props) => {
     )
   })  
 
-  const handleNameChange = (event) => {
-    setNameValue(event.target.value);
-  }
-
-  const handleEmailChange = (event) => {
-    setEmailValue(event.target.value);
-  }
-
-  const handlePasswordChange = (event) => {
-    setPasswordValue(event.target.value);
-  }
-
-  const handleOccupationChange = (event) => {
-    setOccupationValue(event.target.value);
-  } 
-
-  const handleLocationChange = (event) => {
-    setLocationValue(event.target.value);
-  }
-
-  const formObject = {
-    name: nameValue,
-    email: emailValue,
-    password: passwordValue,
-    occupation: occupationValue,
-    state: locationValue
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInputValues(prevState => ({...prevState, [name]: value}))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let { name, email, password, occupation, state } = formObject;
+    let { name, email, password, occupation, state } = inputValues;
     if ( name && email && password && occupation && state ) {
-      postData(formObject)
+      postData(inputValues)
         .catch(e => setSubmitMessage(e.message))
         .then(setTimeout(() => setSubmitMessage(''), 4000))
     }
@@ -90,12 +69,12 @@ const Form = (props) => {
   }
 
   const occupationSelect = document.querySelector('.occupation-select');
-  if (occupationValue) {
+  if (inputValues.occupation) {
     occupationSelect.classList.remove('default');
   }
 
   const locationSelect = document.querySelector('.location-select');
-  if (locationValue) {
+  if (inputValues.state) {
     locationSelect.classList.remove('default');
   }
 
@@ -108,36 +87,39 @@ const Form = (props) => {
       <label className="name-label">Full Name</label>
       <input 
         className="name-input"
+        name="name"
         type="text"
-        value={nameValue} 
+        value={inputValues.name} 
         placeholder="Joseph Christ"
-        onChange={handleNameChange}
+        onChange={handleChange}
       >
       </input>
       <label className="email-label">Email</label>
       <input 
         className="email-input"
+        name="email"
         type="text"
-        value={emailValue} 
+        value={inputValues.email} 
         placeholder="josephchrist@nazareth.com"
-        onChange={handleEmailChange}
+        onChange={handleChange}
       >
       </input>
       <label className="password-label">Password</label>
       <input 
         className="password-input"
+        name="password"
         type="password"
-        value={passwordValue}  
+        value={inputValues.password}  
         placeholder="Password"
-        onChange={handlePasswordChange}
+        onChange={handleChange}
       >
       </input>
       <label className="occupation-label">Occupation</label>
       <select 
         className="occupation-select default" 
-        onChange={handleOccupationChange} 
         name="occupation"
-        value={occupationValue}
+        value={inputValues.occupation}
+        onChange={handleChange} 
       >
         <option className="default-option" value="" disabled>Carpenter</option>
         {occupationOptions}
@@ -145,9 +127,9 @@ const Form = (props) => {
       <label className="location-label">Location</label>
       <select 
         className="location-select default"
-        onChange={handleLocationChange}
-        name="location"
-        value={locationValue}
+        name="state"
+        value={inputValues.state}
+        onChange={handleChange}
       >
         <option className="default-option" value="" disabled>Nazareth</option>
         {locationOptions}
