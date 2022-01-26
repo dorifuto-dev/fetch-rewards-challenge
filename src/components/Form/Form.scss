@@ -1,8 +1,21 @@
-.occupation-select {
-  width: 50vw;
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: #efefef;
+  color: black;
+  border: 1px solid lime;
+  padding: 1em;
+  border-radius: 1em;
+  width: 30rem;
 }
 
-.occupation-option {
-  color: black;
-  width: 50vw;
+.default {
+  color: #777777;
+}
+
+label {
+  text-align: left;
+  margin: 0.2em;
+  font-size: 0.6em;
 }
