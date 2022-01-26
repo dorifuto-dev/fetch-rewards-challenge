@@ -105,7 +105,7 @@ const Form = (props) => {
       onSubmit={handleSubmit}
     >
       <h3 className="form-title">New User Signup</h3>
-      <label>Full Name</label>
+      <label className="name-label">Full Name</label>
       <input 
         className="name-input"
         type="text"
@@ -114,7 +114,7 @@ const Form = (props) => {
         onChange={handleNameChange}
       >
       </input>
-      <label>Email</label>
+      <label className="email-label">Email</label>
       <input 
         className="email-input"
         type="text"
@@ -123,7 +123,7 @@ const Form = (props) => {
         onChange={handleEmailChange}
       >
       </input>
-      <label>Password</label>
+      <label className="password-label">Password</label>
       <input 
         className="password-input"
         type="password"
@@ -132,7 +132,7 @@ const Form = (props) => {
         onChange={handlePasswordChange}
       >
       </input>
-      <label>Occupation</label>
+      <label className="occupation-label">Occupation</label>
       <select 
         className="occupation-select default" 
         onChange={handleOccupationChange} 
@@ -142,7 +142,7 @@ const Form = (props) => {
         <option className="default-option" value="" disabled>Carpenter</option>
         {occupationOptions}
       </select>
-      <label>Location</label>
+      <label className="location-label">Location</label>
       <select 
         className="location-select default"
         onChange={handleLocationChange}
