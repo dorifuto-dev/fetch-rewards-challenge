@@ -61,4 +61,11 @@ describe('Fetch Rewards Form User flows', () => {
     cy.get('.notification')
       .should('contain', 'Something went wrong. Please try submitting the form again.')
   })
+
+  it('Should display error if select fields fail to fetch data', () => {
+    cy.interceptSadGetData()
+    cy.visit('http://localhost:3000/')
+    cy.get('.notification')
+      .should('contain', 'Form data failed to fetch. Please refresh the page.')
+  })
 })
