@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchData, postData } from '../../apiCalls';
 import './Form.scss';
 
-const Form = (props) => {
+const Form = () => {
 
   const [formData, setFormData] = useState(null);
   const [occupations, setOccupations] = useState([]);
@@ -14,7 +14,7 @@ const Form = (props) => {
     occupation: '', 
     state: '' 
   });
-  const [incompleteError, setIncompleteError] = useState('');
+  const [error, setError] = useState('');
   const [submitMessage, setSubmitMessage] = useState('');
 
   useEffect(() => {
@@ -35,6 +35,7 @@ const Form = (props) => {
   const fetchFormData = () => {
     fetchData()
       .then(data => setFormData(data))
+      .catch(error => setError(error.message))
   }
 
   const occupationOptions = occupations && occupations.map((occupation, index) => {
@@ -58,14 +59,24 @@ const Form = (props) => {
     event.preventDefault();
     let { name, email, password, occupation, state } = inputValues;
     if ( name && email && password && occupation && state ) {
-      postData(inputValues)
-        .catch(e => setSubmitMessage(e.message))
-        .then(setTimeout(() => setSubmitMessage(''), 4000))
+      postFormData();
     }
     else {
-      setIncompleteError("Please fill out all fields before submitting the form.")
-      setTimeout(() => setIncompleteError(''), 4000)
+      setError("Please fill out all fields before submitting the form.")
+      setTimeout(() => setError(''), 4000)
     }
+  }
+
+  const postFormData = () => {
+    postData(inputValues)
+    .then((response) => {
+      if (response.ok) {
+        setSubmitMessage("Successfully signed up. Welcome to Fetch Rewards!")
+      } else {
+        throw new Error ("Something went wrong. Please try submitting the form again.")
+      }
+    })
+    .catch(error => setError(error.message))
   }
 
   const occupationSelect = document.querySelector('.occupation-select');
@@ -141,7 +152,7 @@ const Form = (props) => {
       >
       </input>
       {submitMessage && <p className="notification">{submitMessage}</p>}
-      {incompleteError && <p className="notification">{incompleteError}</p>} 
+      {error && <p className="notification">{error}</p>} 
     </form>
   );
 }
