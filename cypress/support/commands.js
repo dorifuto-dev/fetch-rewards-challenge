@@ -2,6 +2,12 @@ Cypress.Commands.add('interceptGetData', () => {
   cy.intercept('GET', 'https://frontend-take-home.fetchrewards.com/form', { fixture: 'formData.json' })
 })
 
+Cypress.Commands.add('interceptSadGetData', () => {
+  cy.intercept('GET', 'https://frontend-take-home.fetchrewards.com/form', {
+    statusCode: 404
+  })
+})
+
 Cypress.Commands.add('fillForm', () => {
   cy.get('.name-input')
     .type('Eric Li')
